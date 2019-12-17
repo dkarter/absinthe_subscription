@@ -11,4 +11,13 @@ defmodule AbsintheSubscriptionWeb.Schema do
       resolve(&Resolvers.Content.list_posts/3)
     end
   end
+
+  mutation do
+    field :create_post, :post do
+      arg :title, non_null(:string)
+      arg :body, :string
+
+      resolve(&Resolvers.Content.create_post/3)
+    end
+  end
 end

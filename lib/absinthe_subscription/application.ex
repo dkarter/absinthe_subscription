@@ -10,7 +10,8 @@ defmodule AbsintheSubscription.Application do
     children = [
       AbsintheSubscription.Repo,
       AbsintheSubscriptionWeb.Endpoint,
-      {Absinthe.Subscription, [AbsintheSubscriptionWeb.Endpoint]},
+      AbsintheSubscription.PostStore,
+      {Absinthe.Subscription, [AbsintheSubscriptionWeb.Endpoint]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
