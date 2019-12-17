@@ -1,7 +1,7 @@
 defmodule AbsintheSubscriptionWeb.Schema do
   use Absinthe.Schema
 
-  import_types AbsintheSubscriptionWeb.Schema.ContentTypes
+  import_types(AbsintheSubscriptionWeb.Schema.ContentTypes)
 
   alias AbsintheSubscriptionWeb.Resolvers
 
@@ -14,10 +14,20 @@ defmodule AbsintheSubscriptionWeb.Schema do
 
   mutation do
     field :create_post, :post do
-      arg :title, non_null(:string)
-      arg :body, :string
+      arg(:title, non_null(:string))
+      arg(:body, :string)
 
       resolve(&Resolvers.Content.create_post/3)
+    end
+  end
+
+  subscription do
+    field :post_created, :post do
+      config(fn _args, _ ->
+        {:ok, topic: "posts"}
+      end)
+
+      trigger(:create_post, topic: fn _post -> "posts" end)
     end
   end
 end
