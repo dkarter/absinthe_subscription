@@ -1,20 +1,53 @@
 # AbsintheSubscription
 
-To start your Phoenix server:
+An example of creating GraphQL Subscriptions over WebSockets using Absinthe and
+Phoenix Channels.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+Uses a simple GenServer for storing state.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Usage
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Run the server using: `mix phx.server`
 
-## Learn more
+Open GraphiQL in your browser at [http://localhost:4000/graphiql](http://localhost:4000/graphiql)
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+### Query Posts
+
+```graphql
+{
+  posts {
+    id,
+    title,
+    body
+  }
+}
+```
+
+There should be one hardcoded by default.
+
+### Create a Post
+
+```graphql
+mutation createPost {
+  createPost(title: "another post", body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin, neque ac ultrices consectetur, eros sem viverra diam, at aliquam nunc mauris non arcu. Ut et sem a justo molestie tristique. Nunc consectetur orci felis, lacinia congue sem accumsan tempus. Sed sit amet risus nec est convallis tempor. Aenean facilisis tristique lacus quis eleifend. Sed elementum bibendum lectus, vel tristique quam sollicitudin in. Praesent sed venenatis nisi, sit amet maximus mauris. Maecenas sit amet pretium nibh, a pharetra lorem. Mauris sagittis erat vel finibus porttitor. Fusce convallis suscipit dolor, vitae tristique elit. Phasellus nisl est, efficitur eu vestibulum nec, commodo in dolor. Donec ac risus leo. Quisque quam velit, sodales non sem in, ullamcorper semper tortor. Quisque dignissim lectus eu ligula dapibus, et hendrerit nisi ultrices.") {
+    id
+  }
+]
+```
+
+### Create a Subscription
+
+Run this inside of GraphiQL
+
+```graphql
+subscription {
+  postCreated {
+    id,
+    title,
+    body
+  }
+}
+```
+
+Now in a separate window create more posts. Each time a post is created you will
+see it in the subscription query.
