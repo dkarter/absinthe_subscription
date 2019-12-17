@@ -11,16 +11,9 @@ defmodule AbsintheSubscriptionWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: AbsintheSubscriptionWeb.Schema
+
+    forward "/", Absinthe.Plug, schema: AbsintheSubscriptionWeb.Schema
   end
-
-  scope "/", AbsintheSubscriptionWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
-  end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", AbsintheSubscriptionWeb do
-  #   pipe_through :api
-  # end
 end

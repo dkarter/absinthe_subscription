@@ -1,6 +1,8 @@
 defmodule AbsintheSubscriptionWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :absinthe_subscription
 
+  use Absinthe.Phoenix.Endpoint
+
   socket "/socket", AbsintheSubscriptionWeb.UserSocket,
     websocket: true,
     longpoll: false
